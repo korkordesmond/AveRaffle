@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta Data Section -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes, viewport-fit=cover">
-    <meta name="description" content="Raffle UP – mobile‑first raffle draw. Win gadgets, gift cards & more. Fully responsive, no overflow.">
+    <meta name="description" content="Raffle UP, join  a large community of raffle ethusiasts and test your luck in our exciting raffle draws. Win amazing prizes and have fun!">
     <meta name="keywords" content="raffle, mobile friendly, lottery, draw, win prizes, giveaway">
     <meta name="author" content="Hackie Nawhat">
     <meta name="theme-color" content="#3b82f6">
+
+    <!-- CDN Section: Icons, Stylesheets and Fonts  -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" href="raffle-up-icon.svg" type="image/svg">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+
     <title>Raffle UP</title>
+
+    <!-- CSS Section-->
     <style>
+
+        /* Default Styling Controls */
         * { 
             box-sizing: border-box; 
             margin: 0; 
@@ -36,7 +44,8 @@
             justify-content: center;
             padding: 0.75rem; 
         }
-        
+
+        /* Background Animation */
         .bg-animated {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
             background-size: 400% 400%;
@@ -47,6 +56,7 @@
             50% { background-position: 100% 50%; }
         }
         
+        /* Particles on the landing page and their animation */
         .particle {
             position: fixed;
             width: 4px;
@@ -64,6 +74,7 @@
             100% { transform: translateY(-110vh) translateX(40px); opacity: 0; }
         }
         
+        /* Glassy Effect */
         .glass {
             background: rgba(15, 23, 42, 0.75);
             backdrop-filter: blur(12px);
@@ -73,6 +84,7 @@
             max-width: 100%;
         }
         
+        /* Responsivity of containers */
         .container-responsive {
             width: 100%;
             max-width: 100%;
@@ -80,12 +92,14 @@
             margin-right: auto;
         }
         
+        /* Card sizing and overflow controls     */
         .card-limiter {
             max-width: 100%;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
         
+        /* Participants section scrolling and behaviour */
         .participant-scroll {
             max-height: 360px;
             overflow-y: auto;
@@ -105,11 +119,13 @@
             border-radius: 10px;
         }
         
+        /* Default styling for images and icons */
         img, svg, .bi {
             max-width: 100%;
             vertical-align: middle;
         }
         
+        /* Spinner's animation */
         .spinner {
             border: 4px solid rgba(59, 130, 246, 0.2);
             border-left-color: #3b82f6;
@@ -120,6 +136,7 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         
+        /* Skeleton loading effect */
         .skeleton {
             background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
             background-size: 200% 100%;
@@ -130,6 +147,7 @@
             100% { background-position: -200% 0; } 
         }
         
+        /* Predefined Padding for uniformity */
         .responsive-pad {
             padding: 1.25rem 1rem;
         }
@@ -151,6 +169,7 @@
             50% { transform: scale(1.02); }
         }
         
+        /* Celebration confetti styling */
         .confetti {
             position: fixed;
             width: 8px;
@@ -189,6 +208,7 @@
             50% { box-shadow: 0 0 24px rgba(59,130,246,0.8); }
         }
         
+        /* Prompt toast styling */
         .toast {
             position: fixed;
             top: 12px;
@@ -212,11 +232,13 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        /* No overflow settings */
         .no-ovf {
             overflow-x: hidden;
             overflow-y: visible;
         }
         
+        /* Avator contiainer design */
         .avatar-circle {
             width: 40px;
             height: 40px;
@@ -230,23 +252,45 @@
             flex-shrink: 0;
         }
         
-        .logout-fab {
+        /* Logout Btn styling */
+        .logout-btn {
             bottom: 16px;
             right: 16px;
             padding: 12px 18px;
             border-radius: 40px;
             box-shadow: 0 10px 26px rgba(0,0,0,0.6);
         }
-        
+    
+        /* Default fonts for inputs and btns */
         input, button {
             font-size: 16px; 
         }
+        
+        /* Trophy Animation */
+        @keyframes trophyBounce {
+            0%,100%{ transform: translateY(0); }
+            50%{ transform: translateY(-6px); }
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .xs\:inline {
+            display: inline;
+        }
+        @media (max-width: 480px) {
+            .xs\:inline { display: none; }
+        }
+        .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     </style>
 </head>
 <body class="bg-animated relative min-h-screen w-full flex items-center justify-center p-3 sm:p-5 no-ovf">
-
+    <!-- Particles container -->
     <div id="particlesContainer" class="fixed inset-0 w-full h-full pointer-events-none z-0"></div>
 
+    <!-- Welcome Container -->
     <div id="welcomeContainer" class="fade-in container-responsive relative glass rounded-3xl shadow-2xl w-full max-w-4xl mx-auto responsive-pad z-10">
         <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-600/5 to-transparent pointer-events-none"></div>
         <div class="relative flex flex-col items-center text-center w-full">
@@ -268,6 +312,7 @@
         </div>
     </div>
 
+    <!-- Detail entry container -->
     <div id="detailContainer" class="fade-in hidden container-responsive glass rounded-3xl w-full max-w-2xl mx-auto responsive-pad z-10">
         <div class="flex flex-col items-center w-full">
             <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 shadow-2xl glow flex items-center justify-center mb-4">
@@ -300,6 +345,7 @@
         </div>
     </div>
 
+    <!-- Draw container -->
     <div id="drawContainer" class="fade-in hidden container-responsive glass rounded-3xl w-full max-w-6xl mx-auto responsive-pad z-10">
         <div class="w-full">
             <div class="flex flex-col items-center mb-6">
@@ -387,6 +433,7 @@
         </div>
     </div>
 
+    <!-- Loading container -->
     <div id="loadingContainer" class="fade-in hidden container-responsive glass rounded-3xl w-full max-w-2xl mx-auto p-8 z-10">
         <div class="flex flex-col items-center py-8 sm:py-12">
             <div class="spinner w-12 h-12 sm:w-14 sm:h-14 mb-6"></div>
@@ -399,6 +446,7 @@
         </div>
     </div>
 
+    <!-- Draw spinner -->
     <div id="drawLoadingSpinner" class="hidden fixed inset-x-0 top-1/2 -translate-y-1/2 flex justify-center items-center z-50 px-4">
         <div class="glass px-5 sm:px-8 py-5 rounded-2xl shadow-2xl glow flex items-center gap-4 max-w-sm w-auto">
             <div class="spinner w-8 h-8 sm:w-10 sm:h-10"></div>
@@ -409,17 +457,21 @@
         </div>
     </div>
 
-    <button id="logoutBtn" class="ripple hidden logout-fab fixed bottom-4 right-4 sm:bottom-6 sm:right-6 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold shadow-xl hover-lift flex items-center gap-2 z-50 text-sm sm:text-base">
+    <!-- Logout Btn -->
+    <button id="logoutBtn" class="ripple hidden logout-btn fixed bottom-4 right-4 sm:bottom-6 sm:right-6 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold shadow-xl hover-lift flex items-center gap-2 z-50 text-sm sm:text-base">
         <i class="bi bi-box-arrow-right text-lg sm:text-xl"></i>
         <span class="hidden xs:inline sm:inline">LOGOUT</span>
     </button>
 
+    <!-- Toast -->
     <div id="toastContainer" class="fixed top-0 left-0 right-0 flex justify-center pointer-events-none z-[100] p-3"></div>
 
+    <!-- Functionality Scripts -->
     <script>
+
         (function() {
             "use strict";
-
+            // Initial participants
             let participants = [
                 "Benjamin Miller",
                 "David Smith", 
@@ -427,11 +479,14 @@
                 "Charles Brown",
                 "Emily Genevieve"
             ];
+
+            // Other Storage variables
             let currentWinner = null;
             let lastAddedUserName = null;
             let drawHistory = [];
             let winners = new Set();
 
+            // Element references
             const welcomeEl = document.getElementById('welcomeContainer');
             const detailEl = document.getElementById('detailContainer');
             const drawEl = document.getElementById('drawContainer');
@@ -454,6 +509,7 @@
             const winRateEl = document.getElementById('winRate');
             const emptyParticipantsEl = document.getElementById('emptyParticipants');
 
+            // Helper functions
             function escapeHtml(unsafe) {
                 if (!unsafe) return '';
                 return unsafe.replace(/[&<>"']/g, (m) => {
@@ -462,6 +518,7 @@
                 });
             }
 
+            // Toast function for notifications
             function showToast(message, icon = 'check-circle-fill', color = 'green') {
                 const toastContainer = document.getElementById('toastContainer');
                 const toast = document.createElement('div');
@@ -480,6 +537,7 @@
                 }, 3000);
             }
 
+            // Confetti creation for celebrations
             function createConfetti() {
                 const colors = ['#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'];
                 for (let i = 0; i < 50; i++) {
@@ -496,6 +554,7 @@
                 }
             }
 
+            // Particle creation for landing page
             function createParticles() {
                 const container = document.getElementById('particlesContainer');
                 for (let i = 0; i < 18; i++) {
@@ -509,6 +568,7 @@
                 }
             }
 
+            // Update stats after each draw
             function updateStats() {
                 totalDrawsEl.textContent = drawHistory.length;
                 uniqueWinnersEl.textContent = winners.size;
@@ -520,11 +580,13 @@
                 }
             }
 
+            // Toggle submit button based on input
             function toggleSubmitButton() {
                 const val = nameInput.value.trim();
                 submitNameBtn.disabled = val === '';
             }
 
+            // Shows participants in the list
             function renderParticipants() {
                 if (!participantListDiv) return;
                 participantListDiv.innerHTML = '';
@@ -564,6 +626,7 @@
                 participantCountSpan.textContent = participants.length;
             }
 
+            // Draw winner with loading and shuffle effect
             function performDrawWithDelay() {
                 if (participants.length === 0) {
                     showToast('No participants', 'exclamation-triangle', 'yellow');
@@ -615,8 +678,10 @@
                 }, 1400);
             }
 
+            // Reset raffle but keep last added user if they exist
             function resetRaffle() {
                 const keepUser = lastAddedUserName;
+                // Next Set of participants after reset
                 participants = [
                     "Samson Adu",
                     "Olivia Owusuaa", 
@@ -642,6 +707,7 @@
                 showToast('Raffle reset', 'arrow-clockwise', 'blue');
             }
 
+            // Add participant from input with validation and feedback
             function addParticipantFromInput() {
                 const raw = nameInput.value.trim();
                 if (raw === '') return;
@@ -660,6 +726,7 @@
                 toggleSubmitButton();
             }
 
+            // Show loading screen briefly before showing details
             function showLoadingAndThenDetail() {
                 welcomeEl.classList.add('hidden');
                 detailEl.classList.add('hidden');
@@ -674,6 +741,7 @@
                 }, 900);
             }
 
+            // Show draw screen with participants and stats
             function showDrawScreen() {
                 detailEl.classList.add('hidden');
                 loadingEl.classList.add('hidden');
@@ -683,6 +751,7 @@
                 updateStats();
             }
 
+            // LOgout Logic to reset everything and go back to welcome screen
             function logout() {
                 participants = [
                     "Sarkodie Robert",
@@ -738,25 +807,5 @@
 
         })();
     </script>
-
-    <style>
-        @keyframes trophyBounce {
-            0%,100%{ transform: translateY(0); }
-            50%{ transform: translateY(-6px); }
-        }
-        .gradient-text {
-            background: linear-gradient(135deg, #60a5fa, #3b82f6, #2563eb);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .xs\:inline {
-            display: inline;
-        }
-        @media (max-width: 480px) {
-            .xs\:inline { display: none; }
-        }
-        .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    </style>
 </body>
 </html>
