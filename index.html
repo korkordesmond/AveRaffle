@@ -2,39 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Raffle UP - Your chance to win big! Join our exciting raffle for amazing prizes including gadgets, gift cards, and once-in-a-lifetime experiences.">
-    <meta name="keywords" content="raffle, lottery, draw, win, prizes, giveaway, contest">
+    <!-- responsive meta: key for mobile, no overflow -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes, viewport-fit=cover">
+    <meta name="description" content="Raffle UP – mobile‑first raffle draw. Win gadgets, gift cards & more. Fully responsive, no overflow.">
+    <meta name="keywords" content="raffle, mobile friendly, lottery, draw, win prizes, giveaway">
     <meta name="author" content="Hackie Nawhat">
     <meta name="theme-color" content="#3b82f6">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link rel="icon" href="raffle-up-icon.svg" type="image/svg">
+    <link rel="icon" href="raffle-up-icon.svg" type="image/svg">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Raffle UP</title>
+    <title>Raffle UP · mobile ready</title>
     <style>
+        /* strict reset: no unexpected overflow */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
         body { 
             font-family: 'Poppins', sans-serif; 
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: #e2e8f0;
-            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem; /* safe padding for mobile */
         }
         
-        /* Animated background */
+        /* animated background subtle */
         .bg-animated {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
             background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
+            animation: gradientShift 18s ease infinite;
         }
-        
         @keyframes gradientShift {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
         }
         
-        /* Floating particles */
+        /* particle fixed but contained */
         .particle {
             position: fixed;
             width: 4px;
@@ -42,451 +58,408 @@
             background: rgba(59, 130, 246, 0.5);
             border-radius: 50%;
             pointer-events: none;
-            animation: float 20s infinite;
+            will-change: transform;
+            animation: float 22s infinite;
         }
-        
         @keyframes float {
-            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 0.9; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-110vh) translateX(40px); opacity: 0; }
         }
         
-        /* Enhanced spinner */
+        /* glass with safe blur */
+        .glass {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        /* responsive container width control */
+        .container-responsive {
+            width: 100%;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* cards & elements never overflow */
+        .card-limiter {
+            max-width: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        /* scrollable participant list – smooth on mobile */
+        .participant-scroll {
+            max-height: 360px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            padding-right: 2px;
+        }
+        .participant-scroll::-webkit-scrollbar {
+            width: 5px;
+        }
+        .participant-scroll::-webkit-scrollbar-track {
+            background: #1e293b;
+            border-radius: 10px;
+        }
+        .participant-scroll::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 10px;
+        }
+        
+        /* all images, svg, icons max-width */
+        img, svg, .bi {
+            max-width: 100%;
+            vertical-align: middle;
+        }
+        
+        /* spinner */
         .spinner {
             border: 4px solid rgba(59, 130, 246, 0.2);
             border-left-color: #3b82f6;
             border-radius: 50%;
-            width: 3rem;
-            height: 3rem;
+            width: 2.5rem;
+            height: 2.5rem;
             animation: spin 1s linear infinite;
         }
+        @keyframes spin { to { transform: rotate(360deg); } }
         
-        @keyframes spin { 
-            to { transform: rotate(360deg); } 
-        }
-        
-        /* Skeleton loader */
+        /* skeleton */
         .skeleton {
             background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
             background-size: 200% 100%;
-            animation: pulse 1.5s ease-in-out infinite;
+            animation: pulse 1.6s ease-in-out infinite;
         }
-        
         @keyframes pulse { 
             0% { background-position: 200% 0; } 
             100% { background-position: -200% 0; } 
         }
         
-        /* Custom scrollbar */
-        .custom-scroll::-webkit-scrollbar { width: 8px; }
-        .custom-scroll::-webkit-scrollbar-track { 
-            background: #1e293b; 
-            border-radius: 10px; 
-        }
-        .custom-scroll::-webkit-scrollbar-thumb { 
-            background: linear-gradient(180deg, #3b82f6, #2563eb);
-            border-radius: 10px; 
-        }
-        .custom-scroll::-webkit-scrollbar-thumb:hover { 
-            background: linear-gradient(180deg, #2563eb, #1d4ed8);
+        /* mobile first: avoid tiny padding issues */
+        .responsive-pad {
+            padding: 1.25rem 1rem;
         }
         
-        /* Glass morphism effect */
-        .glass {
-            background: rgba(17, 24, 39, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(59, 130, 246, 0.2);
+        @media (max-width: 480px) {
+            .responsive-pad {
+                padding: 1rem 0.85rem;
+            }
+            h1 { font-size: 2.2rem; }
+            .text-5xl { font-size: 2.2rem; }
+            .text-4xl { font-size: 1.9rem; }
         }
         
-        /* Glow effect */
-        .glow {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3),
-                        0 0 40px rgba(59, 130, 246, 0.2),
-                        0 0 60px rgba(59, 130, 246, 0.1);
+        /* winner pulse */
+        .winner-animate {
+            animation: winnerPulse 0.5s ease 3;
         }
-        
-        /* Winner animation */
         @keyframes winnerPulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.02); }
         }
         
-        .winner-animate {
-            animation: winnerPulse 0.5s ease-in-out 3;
-        }
-        
-        /* Confetti */
+        /* confetti contained */
         .confetti {
             position: fixed;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             pointer-events: none;
             z-index: 9999;
+            border-radius: 2px;
         }
-        
         @keyframes confettiFall {
-            to {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
+            to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
         
-        /* Fade in animation */
+        /* fade in */
         .fade-in {
-            animation: fadeIn 0.5s ease-in;
+            animation: fadeIn 0.4s ease-out;
         }
-        
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Hover effects */
+        /* hover-lift minimal on mobile */
         .hover-lift {
-            transition: all 0.3s ease;
+            transition: transform 0.25s ease, box-shadow 0.25s;
         }
-        
-        .hover-lift:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
-        }
-        
-        /* Participant card animation */
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
+        @media (hover: hover) {
+            .hover-lift:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 22px rgba(59,130,246,0.3);
             }
         }
         
-        .participant-card {
-            animation: slideIn 0.3s ease-out;
-        }
-        
-        /* Button ripple effect */
-        .ripple {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .ripple::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        
-        .ripple:active::after {
-            width: 300px;
-            height: 300px;
-        }
-        
-        /* Gradient text */
-        .gradient-text {
-            background: linear-gradient(135deg, #60a5fa, #3b82f6, #2563eb);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* Trophy bounce */
-        @keyframes trophyBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .trophy-bounce {
-            animation: trophyBounce 1s ease-in-out infinite;
-        }
-        
-        /* Stats counter animation */
-        @keyframes countUp {
-            from { opacity: 0; transform: scale(0.5); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        
-        .count-animate {
-            animation: countUp 0.4s ease-out;
-        }
-        
-        /* Disabled state */
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-        
-        /* Drawing animation */
-        @keyframes drawPulse {
-            0%, 100% { 
-                box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-            }
-            50% { 
-                box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
-            }
-        }
-        
+        /* draw active */
         .draw-active {
-            animation: drawPulse 1s ease-in-out infinite;
+            animation: drawPulse 1s infinite;
+        }
+        @keyframes drawPulse {
+            0%, 100% { box-shadow: 0 0 12px rgba(59,130,246,0.4); }
+            50% { box-shadow: 0 0 24px rgba(59,130,246,0.8); }
         }
         
-        /* Toast notification */
+        /* toast: mobile width */
         .toast {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 12px;
+            right: 12px;
+            left: 12px;
+            width: calc(100% - 24px);
+            max-width: 360px;
+            margin-left: auto;
+            margin-right: auto;
             background: rgba(17, 24, 39, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 16px 24px;
-            border-radius: 12px;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            z-index: 9999;
-            animation: slideInFromRight 0.4s ease-out;
+            backdrop-filter: blur(16px);
+            padding: 14px 20px;
+            border-radius: 40px;
+            border: 1px solid rgba(59,130,246,0.3);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.5);
+            z-index: 99999;
+            animation: slideInToast 0.3s ease;
+        }
+        @keyframes slideInToast {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        @keyframes slideInFromRight {
-            from {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        /* disable overflow anywhere */
+        .no-ovf {
+            overflow-x: hidden;
+            overflow-y: visible;
         }
         
-        /* Loading dots */
-        .loading-dots span {
-            animation: loadingDot 1.4s infinite;
+        /* avatar initials */
+        .avatar-circle {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(145deg, #2563eb, #3b82f6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
         }
         
-        .loading-dots span:nth-child(2) {
-            animation-delay: 0.2s;
+        /* logout button mobile */
+        .logout-fab {
+            bottom: 16px;
+            right: 16px;
+            padding: 12px 18px;
+            border-radius: 40px;
+            box-shadow: 0 10px 26px rgba(0,0,0,0.6);
         }
         
-        .loading-dots span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-        
-        @keyframes loadingDot {
-            0%, 80%, 100% { opacity: 0.3; }
-            40% { opacity: 1; }
+        /* fix input zoom on mobile */
+        input, button {
+            font-size: 16px; /* avoid zoom on focus iOS */
         }
     </style>
 </head>
-<body class="bg-animated relative min-h-screen flex flex-col items-center justify-center p-4">
-    <!-- Floating particles background -->
-    <div id="particlesContainer"></div>
-    
-    <!-- Welcome Screen -->
-    <div id="welcomeContainer" class="fade-in container relative glass p-6 rounded-3xl lg:max-w-[65%] mx-auto shadow-2xl">
-        <div class="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
-            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-500/10 to-transparent"></div>
-        </div>
-        
-        <div class="relative">
-            <div class="text-center mb-8">
-                <div class="inline-flex items-center justify-center w-32 h-32 rounded-full shadow-2xl glow mb-6">
-                    <img src="raffle-up-icon.svg"/>
-                </div>
-                <h1 class="text-5xl font-bold mb-4 gradient-text">RAFFLE UP</h1>
-                <p class="text-2xl font-semibold text-white mb-4">🎉 Your Chance to Win Big! 🎉</p>
-                <p class="text-base text-gray-300 leading-relaxed max-w-2xl mx-auto">
-                    Step right in and join our exciting raffle! Every ticket gives you a shot at amazing prizes—whether it's gadgets, gift cards, or once-in-a-lifetime experiences. It's simple, fun, and full of surprises. Don't miss out—your next win could be just a ticket away!
-                </p>
+<body class="bg-animated relative min-h-screen w-full flex items-center justify-center p-3 sm:p-5 no-ovf">
+
+    <!-- floating particles container -->
+    <div id="particlesContainer" class="fixed inset-0 w-full h-full pointer-events-none z-0"></div>
+
+    <!-- WELCOME SCREEN – fully responsive -->
+    <div id="welcomeContainer" class="fade-in container-responsive relative glass rounded-3xl shadow-2xl w-full max-w-4xl mx-auto responsive-pad z-10">
+        <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-600/5 to-transparent pointer-events-none"></div>
+        <div class="relative flex flex-col items-center text-center w-full">
+            <!-- logo/trophy group -->
+            <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full shadow-2xl glow flex items-center justify-center mb-4 bg-[#1e293b]/50 backdrop-blur-sm p-2">
+                <img src="raffle-up-icon.svg" alt="Raffle UP" class="w-full h-full object-contain">
             </div>
-            
-            <div class="flex justify-center gap-4 mt-8">
-                <button id="tryLuckBtn" class="ripple group px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold shadow-lg hover-lift flex items-center gap-3 text-lg">
-                    <i class="bi bi-rocket-takeoff text-2xl"></i>
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold gradient-text leading-tight">RAFFLE UP</h1>
+            <p class="text-xl sm:text-2xl font-semibold text-white mt-2 mb-3">🎉 Your Chance to Win Big! 🎉</p>
+            <p class="text-sm sm:text-base text-gray-300 max-w-2xl px-2 leading-relaxed">
+                Step right in and join our exciting raffle! Every ticket gives you a shot at amazing prizes—gadgets, gift cards, or once-in-a-lifetime experiences. Simple, fun, and mobile ready.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-5 mt-8 w-full sm:w-auto">
+                <button id="tryLuckBtn" class="ripple group px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold shadow-lg hover-lift flex items-center justify-center gap-2 text-base sm:text-lg">
+                    <i class="bi bi-rocket-takeoff text-xl sm:text-2xl"></i>
                     TRY YOUR LUCK
-                    <i class="bi bi-arrow-right text-xl group-hover:translate-x-1 transition-transform"></i>
+                    <i class="bi bi-arrow-right group-hover:translate-x-1 transition"></i>
                 </button>
             </div>
         </div>
     </div>
-    
-    <!-- Detail Entry Screen -->
-    <div id="detailContainer" class="fade-in hidden container glass relative p-6 rounded-3xl lg:max-w-[65%] mx-auto shadow-2xl">
-        <div class="relative">
-            <div class="text-center mb-8">
-                <div class="inline-flex items-center justify-center w-28 h-28 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 shadow-2xl glow mb-6">
-                    <i class="bi bi-person-plus-fill text-5xl text-white"></i>
-                </div>
-                <h2 class="text-4xl font-bold gradient-text mb-2">GET INVOLVED NOW!!</h2>
-                <p class="text-gray-400">Enter your name to join the raffle</p>
+
+    <!-- DETAIL ENTRY (name) – fully responsive -->
+    <div id="detailContainer" class="fade-in hidden container-responsive glass rounded-3xl w-full max-w-2xl mx-auto responsive-pad z-10">
+        <div class="flex flex-col items-center w-full">
+            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 shadow-2xl glow flex items-center justify-center mb-4">
+                <i class="bi bi-person-plus-fill text-3xl sm:text-4xl text-white"></i>
             </div>
-            
-            <div class="flex flex-col items-center gap-6">
-                <div class="w-full max-w-md">
-                    <div class="glass rounded-2xl p-1 glow">
-                        <div class="flex items-center gap-2">
-                            <input 
-                                id="participantNameInput" 
-                                type="text" 
-                                placeholder="Enter your name" 
-                                class="flex-1 h-14 text-lg px-6 rounded-xl bg-[#1e293b] focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-400 transition-all"
-                                maxlength="50"
-                            >
-                            <button id="submitNameBtn" disabled class="ripple h-14 w-14 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 flex items-center justify-center transition-all hover-lift disabled:opacity-50 disabled:cursor-not-allowed">
-                                <i class="bi bi-arrow-right text-2xl text-white"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <p id="nameFeedback" class="text-sm text-green-400 mt-3 text-center hidden flex items-center justify-center gap-2">
-                        <i class="bi bi-check-circle-fill"></i>
-                        <span>Name added successfully!</span>
-                    </p>
-                    <div class="text-center mt-4">
-                        <p class="text-xs text-gray-500">Press Enter or click the button to submit</p>
+            <h2 class="text-3xl sm:text-4xl font-bold gradient-text text-center">GET INVOLVED NOW!</h2>
+            <p class="text-gray-400 mb-6 text-sm sm:text-base">Enter your name to join the raffle</p>
+
+            <div class="w-full max-w-md mx-auto">
+                <div class="glass rounded-2xl p-1 glow">
+                    <div class="flex items-center gap-2 w-full">
+                        <input 
+                            id="participantNameInput" 
+                            type="text" 
+                            placeholder="Your name" 
+                            class="flex-1 h-12 sm:h-14 text-base sm:text-lg px-5 rounded-xl bg-[#1e293b] border-0 focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-400 transition w-full min-w-0"
+                            maxlength="50"
+                        >
+                        <button id="submitNameBtn" disabled class="ripple h-12 sm:h-14 w-12 sm:w-14 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center flex-shrink-0 disabled:opacity-50">
+                            <i class="bi bi-arrow-right text-2xl text-white"></i>
+                        </button>
                     </div>
                 </div>
+                <p id="nameFeedback" class="text-sm text-green-400 mt-3 text-center hidden items-center justify-center gap-2">
+                    <i class="bi bi-check-circle-fill"></i>
+                    <span>Name added!</span>
+                </p>
+                <p class="text-xs text-gray-500 text-center mt-3">Press Enter or tap ➔</p>
             </div>
         </div>
     </div>
-    
-    <!-- Draw Screen -->
-    <div id="drawContainer" class="fade-in hidden container glass relative p-6 rounded-3xl lg:max-w-[85%] xl:max-w-[75%] mx-auto shadow-2xl">
-        <div class="relative">
-            <div class="text-center mb-8">
-                <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 shadow-2xl glow mb-4">
-                    <i class="bi bi-trophy-fill text-4xl text-white"></i>
+
+    <!-- DRAW SCREEN – responsive grid, no overflow -->
+    <div id="drawContainer" class="fade-in hidden container-responsive glass rounded-3xl w-full max-w-6xl mx-auto responsive-pad z-10">
+        <div class="w-full">
+            <!-- header -->
+            <div class="flex flex-col items-center mb-6">
+                <div class="w-20 h-20 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 shadow-2xl glow flex items-center justify-center mb-3">
+                    <i class="bi bi-trophy-fill text-3xl text-white"></i>
                 </div>
-                <h2 class="text-4xl font-bold gradient-text">RAFFLE DRAW</h2>
+                <h2 class="text-3xl sm:text-4xl font-bold gradient-text">RAFFLE DRAW</h2>
             </div>
-            
-            <div class="grid lg:grid-cols-2 gap-6 mb-6">
-                <!-- Participants Section -->
-                <div class="glass rounded-2xl p-6 hover-lift">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
-                                <i class="bi bi-people-fill text-2xl text-white"></i>
+
+            <!-- 2 cols: participants & winner (stack on mobile) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6 w-full">
+                <!-- PARTICIPANTS CARD -->
+                <div class="glass rounded-2xl p-4 sm:p-5 hover-lift flex flex-col w-full">
+                    <div class="flex items-center justify-between w-full mb-3">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center flex-shrink-0">
+                                <i class="bi bi-people-fill text-xl sm:text-2xl text-white"></i>
                             </div>
-                            <div>
-                                <h3 class="text-xl font-semibold text-white">Participants</h3>
-                                <p class="text-xs text-gray-400">Total registered</p>
+                            <div class="min-w-0">
+                                <h3 class="text-lg sm:text-xl font-semibold text-white truncate">Participants</h3>
+                                <p class="text-xs text-gray-400 truncate">Total registered</p>
                             </div>
                         </div>
-                        <div class="count-animate bg-gradient-to-br from-blue-600 to-blue-700 text-white text-2xl font-bold px-4 py-2 rounded-xl shadow-lg">
+                        <div class="bg-gradient-to-br from-blue-600 to-blue-700 text-white text-xl sm:text-2xl font-bold px-3 py-1 sm:px-4 sm:py-2 rounded-xl shadow-lg flex-shrink-0 ml-2">
                             <span id="participantCount">5</span>
                         </div>
                     </div>
-                    
-                    <div class="max-h-[400px] overflow-y-auto custom-scroll">
-                        <div id="participantList" class="space-y-2"></div>
-                        <div id="emptyParticipants" class="hidden text-center py-12 text-gray-400">
-                            <i class="bi bi-inbox text-5xl mb-3 block"></i>
-                            <p>No participants yet</p>
+
+                    <!-- scrollable participant list, with fallback -->
+                    <div class="participant-scroll w-full pr-1" style="max-height: 340px;">
+                        <div id="participantList" class="space-y-2 w-full"></div>
+                        <div id="emptyParticipants" class="hidden text-center py-10 text-gray-400 w-full">
+                            <i class="bi bi-inbox text-4xl mb-2"></i>
+                            <p class="text-sm">No participants yet</p>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Winner Display Section -->
-                <div class="glass rounded-2xl p-6 hover-lift">
+
+                <!-- WINNER & DRAW CARD -->
+                <div class="glass rounded-2xl p-4 sm:p-5 hover-lift flex flex-col w-full">
                     <div class="flex items-center gap-3 mb-4">
-                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
-                            <i class="bi bi-star-fill text-2xl text-white"></i>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center flex-shrink-0">
+                            <i class="bi bi-star-fill text-xl sm:text-2xl text-white"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-semibold text-white">Draw Results</h3>
+                            <h3 class="text-lg sm:text-xl font-semibold text-white">Draw Results</h3>
                             <p class="text-xs text-gray-400">Winner announcement</p>
                         </div>
                     </div>
-                    
-                    <div id="winnerDisplayBox" class="glass rounded-2xl p-8 text-center min-h-[300px] flex flex-col items-center justify-center transition-all">
-                        <div id="winnerIcon" class="mb-4">
-                            <i class="bi bi-dash text-6xl text-gray-600"></i>
+
+                    <!-- winner display box: responsive text -->
+                    <div id="winnerDisplayBox" class="glass rounded-2xl p-5 sm:p-7 text-center flex flex-col items-center justify-center min-h-[200px] sm:min-h-[240px] w-full">
+                        <div id="winnerIcon" class="mb-2">
+                            <i class="bi bi-dash text-5xl sm:text-6xl text-gray-600"></i>
                         </div>
-                        <h4 id="winnerName" class="text-3xl font-bold text-white mb-2">—</h4>
-                        <p id="winnerSub" class="text-sm text-gray-400">Click draw to select a winner</p>
+                        <h4 id="winnerName" class="text-2xl sm:text-3xl font-bold text-white break-words w-full">—</h4>
+                        <p id="winnerSub" class="text-xs sm:text-sm text-gray-400 mt-1">Click draw to select a winner</p>
                     </div>
-                    
-                    <div class="flex gap-3 mt-6">
-                        <button id="drawWinnerBtn" class="ripple flex-1 px-6 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold shadow-lg hover-lift flex items-center justify-center gap-2 text-lg">
-                            <i class="bi bi-shuffle text-2xl"></i>
-                            DRAW WINNER
+
+                    <!-- action buttons: stacked on small, row on big -->
+                    <div class="flex flex-col sm:flex-row gap-3 mt-5 w-full">
+                        <button id="drawWinnerBtn" class="ripple flex-1 px-4 py-3 sm:py-4 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold shadow-lg hover-lift flex items-center justify-center gap-2 text-base sm:text-lg">
+                            <i class="bi bi-shuffle text-xl sm:text-2xl"></i>
+                            DRAW
                         </button>
-                        <button id="resetRaffleBtn" class="ripple px-6 py-4 rounded-xl bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-white font-semibold shadow-lg hover-lift flex items-center justify-center gap-2">
-                            <i class="bi bi-arrow-clockwise text-2xl"></i>
+                        <button id="resetRaffleBtn" class="ripple px-4 py-3 sm:py-4 rounded-xl bg-gradient-to-r from-gray-700 to-gray-800 text-white font-bold shadow-lg hover-lift flex items-center justify-center gap-2">
+                            <i class="bi bi-arrow-clockwise text-xl"></i>
                             RESET
                         </button>
                     </div>
                 </div>
             </div>
-            
-            <!-- Statistics Section -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="glass rounded-xl p-4 text-center hover-lift">
-                    <i class="bi bi-ticket-perforated text-3xl text-blue-400 mb-2"></i>
-                    <p class="text-2xl font-bold text-white" id="totalDraws">0</p>
-                    <p class="text-xs text-gray-400">Total Draws</p>
+
+            <!-- STATS: 3 per row, tiny text if needed -->
+            <div class="grid grid-cols-3 gap-2 sm:gap-4 mt-5 w-full">
+                <div class="glass rounded-xl p-3 text-center hover-lift flex flex-col items-center">
+                    <i class="bi bi-ticket-perforated text-2xl sm:text-3xl text-blue-400 mb-1"></i>
+                    <p class="text-lg sm:text-2xl font-bold text-white" id="totalDraws">0</p>
+                    <p class="text-[10px] sm:text-xs text-gray-400 truncate w-full">Total Draws</p>
                 </div>
-                <div class="glass rounded-xl p-4 text-center hover-lift">
-                    <i class="bi bi-trophy text-3xl text-yellow-400 mb-2"></i>
-                    <p class="text-2xl font-bold text-white" id="uniqueWinners">0</p>
-                    <p class="text-xs text-gray-400">Unique Winners</p>
+                <div class="glass rounded-xl p-3 text-center hover-lift flex flex-col items-center">
+                    <i class="bi bi-trophy text-2xl sm:text-3xl text-yellow-400 mb-1"></i>
+                    <p class="text-lg sm:text-2xl font-bold text-white" id="uniqueWinners">0</p>
+                    <p class="text-[10px] sm:text-xs text-gray-400 truncate w-full">Unique Winners</p>
                 </div>
-                <div class="glass rounded-xl p-4 text-center hover-lift">
-                    <i class="bi bi-graph-up text-3xl text-green-400 mb-2"></i>
-                    <p class="text-2xl font-bold text-white" id="winRate">0%</p>
-                    <p class="text-xs text-gray-400">Your Win Rate</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Loading Screen -->
-    <div id="loadingContainer" class="fade-in hidden container glass relative p-6 rounded-3xl lg:max-w-[65%] mx-auto shadow-2xl">
-        <div class="text-center py-12">
-            <div class="spinner mx-auto mb-6"></div>
-            <div class="space-y-4 max-w-md mx-auto">
-                <div class="skeleton h-8 w-full rounded-lg"></div>
-                <div class="skeleton h-8 w-4/5 mx-auto rounded-lg"></div>
-                <div class="skeleton h-8 w-3/5 mx-auto rounded-lg"></div>
-            </div>
-            <p class="text-gray-400 mt-6 loading-dots">
-                Loading<span>.</span><span>.</span><span>.</span>
-            </p>
-        </div>
-    </div>
-    
-    <!-- Draw Loading Spinner -->
-    <div id="drawLoadingSpinner" class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-        <div class="glass px-8 py-6 rounded-2xl shadow-2xl glow">
-            <div class="flex items-center gap-4">
-                <div class="spinner"></div>
-                <div>
-                    <p class="text-white font-semibold text-lg">Drawing Winner</p>
-                    <p class="text-gray-400 text-sm loading-dots">Please wait<span>.</span><span>.</span><span>.</span></p>
+                <div class="glass rounded-xl p-3 text-center hover-lift flex flex-col items-center">
+                    <i class="bi bi-graph-up text-2xl sm:text-3xl text-green-400 mb-1"></i>
+                    <p class="text-lg sm:text-2xl font-bold text-white" id="winRate">0%</p>
+                    <p class="text-[10px] sm:text-xs text-gray-400 truncate w-full">Your Win Rate</p>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- Logout Button -->
-    <button id="logoutBtn" class="ripple hidden fixed bottom-6 right-6 px-6 py-3 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold shadow-lg hover-lift flex items-center gap-2 z-50">
-        <i class="bi bi-box-arrow-right text-xl"></i>
-        LOGOUT
+
+    <!-- LOADING screen -->
+    <div id="loadingContainer" class="fade-in hidden container-responsive glass rounded-3xl w-full max-w-2xl mx-auto p-8 z-10">
+        <div class="flex flex-col items-center py-8 sm:py-12">
+            <div class="spinner w-12 h-12 sm:w-14 sm:h-14 mb-6"></div>
+            <div class="space-y-3 w-full max-w-xs">
+                <div class="skeleton h-7 w-full rounded-lg"></div>
+                <div class="skeleton h-7 w-4/5 mx-auto rounded-lg"></div>
+                <div class="skeleton h-7 w-3/5 mx-auto rounded-lg"></div>
+            </div>
+            <p class="text-gray-400 mt-6 text-sm loading-dots">Loading<span>.</span><span>.</span><span>.</span></p>
+        </div>
+    </div>
+
+    <!-- DRAW LOADING SPINNER (fixed but contained) -->
+    <div id="drawLoadingSpinner" class="hidden fixed inset-x-0 top-1/2 -translate-y-1/2 flex justify-center items-center z-50 px-4">
+        <div class="glass px-5 sm:px-8 py-5 rounded-2xl shadow-2xl glow flex items-center gap-4 max-w-sm w-auto">
+            <div class="spinner w-8 h-8 sm:w-10 sm:h-10"></div>
+            <div class="text-left">
+                <p class="text-white font-semibold text-base sm:text-lg">Drawing Winner</p>
+                <p class="text-gray-400 text-xs sm:text-sm loading-dots">Please wait<span>.</span><span>.</span><span>.</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGOUT BUTTON - mobile floating -->
+    <button id="logoutBtn" class="ripple hidden logout-fab fixed bottom-4 right-4 sm:bottom-6 sm:right-6 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold shadow-xl hover-lift flex items-center gap-2 z-50 text-sm sm:text-base">
+        <i class="bi bi-box-arrow-right text-lg sm:text-xl"></i>
+        <span class="hidden xs:inline sm:inline">LOGOUT</span>
     </button>
-    
-    <!-- Toast Container -->
-    <div id="toastContainer"></div>
-    
+
+    <!-- TOAST container -->
+    <div id="toastContainer" class="fixed top-0 left-0 right-0 flex justify-center pointer-events-none z-[100] p-3"></div>
+
     <script>
         (function() {
+            "use strict";
+
+            // ----- DATA -----
             let participants = [
                 "Benjamin Miller",
                 "David Smith", 
@@ -498,7 +471,8 @@
             let lastAddedUserName = null;
             let drawHistory = [];
             let winners = new Set();
-            
+
+            // ----- DOM references -----
             const welcomeEl = document.getElementById('welcomeContainer');
             const detailEl = document.getElementById('detailContainer');
             const drawEl = document.getElementById('drawContainer');
@@ -520,209 +494,177 @@
             const uniqueWinnersEl = document.getElementById('uniqueWinners');
             const winRateEl = document.getElementById('winRate');
             const emptyParticipantsEl = document.getElementById('emptyParticipants');
-            
-            // Utility Functions
+
+            // ----- helpers -----
             function escapeHtml(unsafe) {
                 if (!unsafe) return '';
-                return unsafe.replace(/[&<>"']/g, function (m) {
-                    const chars = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-                    return chars[m];
+                return unsafe.replace(/[&<>"']/g, (m) => {
+                    const map = { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#039;' };
+                    return map[m];
                 });
             }
-            
+
             function showToast(message, icon = 'check-circle-fill', color = 'green') {
+                const toastContainer = document.getElementById('toastContainer');
                 const toast = document.createElement('div');
                 toast.className = 'toast';
                 toast.innerHTML = `
                     <div class="flex items-center gap-3">
                         <i class="bi bi-${icon} text-2xl text-${color}-400"></i>
-                        <span class="text-white font-medium">${message}</span>
+                        <span class="text-white font-medium text-sm sm:text-base">${message}</span>
                     </div>
                 `;
-                document.getElementById('toastContainer').appendChild(toast);
-                
+                toastContainer.appendChild(toast);
                 setTimeout(() => {
-                    toast.style.animation = 'slideInFromRight 0.4s ease-out reverse';
-                    setTimeout(() => toast.remove(), 400);
+                    toast.style.opacity = '0';
+                    toast.style.transition = 'opacity 0.25s';
+                    setTimeout(() => toast.remove(), 300);
                 }, 3000);
             }
-            
+
+            // confetti (fewer, mobile friendly)
             function createConfetti() {
                 const colors = ['#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'];
-                for (let i = 0; i < 100; i++) {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + 'vw';
-                    confetti.style.top = '-10px';
-                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.animation = `confettiFall ${2 + Math.random() * 3}s linear forwards`;
-                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
-                    document.body.appendChild(confetti);
-                    
-                    setTimeout(() => confetti.remove(), 5000);
+                for (let i = 0; i < 50; i++) {
+                    const conf = document.createElement('div');
+                    conf.className = 'confetti';
+                    conf.style.left = Math.random() * 100 + '%';
+                    conf.style.top = '-8px';
+                    conf.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    conf.style.width = Math.floor(5 + Math.random() * 8) + 'px';
+                    conf.style.height = conf.style.width;
+                    conf.style.animation = `confettiFall ${2 + Math.random() * 2.5}s linear forwards`;
+                    document.body.appendChild(conf);
+                    setTimeout(() => conf.remove(), 4500);
                 }
             }
-            
+
             function createParticles() {
                 const container = document.getElementById('particlesContainer');
-                for (let i = 0; i < 20; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.style.left = Math.random() * 100 + 'vw';
-                    particle.style.animationDelay = Math.random() * 10 + 's';
-                    particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-                    container.appendChild(particle);
+                for (let i = 0; i < 18; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'particle';
+                    p.style.left = Math.random() * 100 + '%';
+                    p.style.top = Math.random() * 100 + '%';
+                    p.style.animationDelay = Math.random() * 8 + 's';
+                    p.style.animationDuration = (14 + Math.random() * 12) + 's';
+                    container.appendChild(p);
                 }
             }
-            
+
+            // update stats 
             function updateStats() {
                 totalDrawsEl.textContent = drawHistory.length;
-                totalDrawsEl.classList.add('count-animate');
-                setTimeout(() => totalDrawsEl.classList.remove('count-animate'), 400);
-                
                 uniqueWinnersEl.textContent = winners.size;
-                uniqueWinnersEl.classList.add('count-animate');
-                setTimeout(() => uniqueWinnersEl.classList.remove('count-animate'), 400);
-                
                 if (lastAddedUserName && drawHistory.length > 0) {
                     const userWins = drawHistory.filter(w => w === lastAddedUserName).length;
-                    const rate = ((userWins / drawHistory.length) * 100).toFixed(1);
-                    winRateEl.textContent = rate + '%';
+                    winRateEl.textContent = ((userWins / drawHistory.length) * 100).toFixed(1) + '%';
                 } else {
                     winRateEl.textContent = '0%';
                 }
-                winRateEl.classList.add('count-animate');
-                setTimeout(() => winRateEl.classList.remove('count-animate'), 400);
             }
-            
+
             function toggleSubmitButton() {
-                const hasValue = nameInput.value.trim() !== '';
-                submitNameBtn.disabled = !hasValue;
-                
-                if (hasValue) {
-                    submitNameBtn.classList.remove('opacity-50');
-                } else {
-                    submitNameBtn.classList.add('opacity-50');
-                }
+                const val = nameInput.value.trim();
+                submitNameBtn.disabled = val === '';
             }
-            
+
+            // render participants with responsive cards
             function renderParticipants() {
                 if (!participantListDiv) return;
-                
                 participantListDiv.innerHTML = '';
-                
+
                 if (participants.length === 0) {
                     emptyParticipantsEl.classList.remove('hidden');
                     participantListDiv.classList.add('hidden');
                 } else {
                     emptyParticipantsEl.classList.add('hidden');
                     participantListDiv.classList.remove('hidden');
-                    
-                    let items = participants.map((name, index) => {
-                        const isUser = lastAddedUserName && name === lastAddedUserName;
+
+                    const items = participants.map((name, idx) => {
+                        const isUser = lastAddedUserName === name;
                         const card = document.createElement('div');
-                        card.className = 'participant-card glass rounded-xl p-4 hover-lift transition-all';
+                        card.className = 'participant-card glass rounded-xl p-3 hover-lift flex items-center justify-between w-full';
                         
-                        const badges = [];
-                        if (isUser) {
-                            badges.push('<span class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full">YOU</span>');
-                        }
-                        if (currentWinner === name) {
-                            badges.push('<span class="bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1"><i class="bi bi-trophy-fill"></i>WINNER</span>');
-                        }
+                        let badges = '';
+                        if (isUser) badges += '<span class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-full ml-2 whitespace-nowrap">YOU</span>';
+                        if (currentWinner === name) badges += '<span class="bg-gradient-to-r from-green-500 to-emerald-500 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1 ml-1 whitespace-nowrap"><i class="bi bi-trophy-fill text-[10px]"></i>WIN</span>';
                         
                         card.innerHTML = `
-                            <div class="flex justify-between items-center">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold">
-                                        ${escapeHtml(name.charAt(0).toUpperCase())}
-                                    </div>
-                                    <div>
-                                        <p class="text-white font-medium">${escapeHtml(name)}</p>
-                                        <p class="text-xs text-gray-400">Participant #${index + 1}</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    ${badges.join('')}
+                            <div class="flex items-center gap-3 min-w-0 flex-1">
+                                <div class="avatar-circle flex-shrink-0">${escapeHtml(name.charAt(0).toUpperCase())}</div>
+                                <div class="min-w-0">
+                                    <p class="text-white font-medium text-sm sm:text-base truncate">${escapeHtml(name)}</p>
+                                    <p class="text-[10px] sm:text-xs text-gray-400">#${idx+1}</p>
                                 </div>
                             </div>
+                            <div class="flex items-center flex-shrink-0 ml-2">
+                                ${badges}
+                            </div>
                         `;
-                        
-                        return { card, isUser, index };
+                        return { card, isUser };
                     });
-                    
-                    // Sort to put user first
-                    items.sort((a, b) => b.isUser - a.isUser);
-                    items.forEach(item => participantListDiv.appendChild(item.card));
+                    // sort YOU first
+                    items.sort((a,b) => b.isUser - a.isUser).forEach(i => participantListDiv.appendChild(i.card));
                 }
-                
                 participantCountSpan.textContent = participants.length;
-                participantCountSpan.classList.add('count-animate');
-                setTimeout(() => participantCountSpan.classList.remove('count-animate'), 400);
             }
-            
+
+            // draw logic with shuffle effect (no overflow)
             function performDrawWithDelay() {
                 if (participants.length === 0) {
-                    showToast('No participants to draw from!', 'exclamation-triangle', 'yellow');
+                    showToast('No participants', 'exclamation-triangle', 'yellow');
                     winnerNameSpan.textContent = '⚠️ No Participants';
-                    winnerIcon.innerHTML = '<i class="bi bi-exclamation-triangle text-6xl text-yellow-500"></i>';
-                    winnerSub.textContent = 'Add at least one name to start';
+                    winnerIcon.innerHTML = '<i class="bi bi-exclamation-triangle text-5xl text-yellow-500"></i>';
+                    winnerSub.textContent = 'Add names first';
                     return;
                 }
-                
+
                 drawLoadingSpinner.classList.remove('hidden');
                 drawWinnerBtn.disabled = true;
                 drawWinnerBtn.classList.add('draw-active');
-                
-                // Shuffle animation
+
                 let shuffleCount = 0;
-                const shuffleInterval = setInterval(() => {
-                    const randomIndex = Math.floor(Math.random() * participants.length);
-                    winnerNameSpan.textContent = participants[randomIndex];
+                const shuffleInt = setInterval(() => {
+                    const rand = Math.floor(Math.random() * participants.length);
+                    winnerNameSpan.textContent = participants[rand];
                     shuffleCount++;
-                    
-                    if (shuffleCount > 10) {
-                        clearInterval(shuffleInterval);
-                    }
-                }, 100);
-                
+                    if (shuffleCount > 12) clearInterval(shuffleInt);
+                }, 80);
+
                 setTimeout(() => {
-                    const randomIndex = Math.floor(Math.random() * participants.length);
-                    const winner = participants[randomIndex];
+                    clearInterval(shuffleInt);
+                    const idx = Math.floor(Math.random() * participants.length);
+                    const winner = participants[idx];
                     currentWinner = winner;
                     drawHistory.push(winner);
                     winners.add(winner);
-                    
+
                     winnerNameSpan.textContent = winner;
-                    winnerIcon.innerHTML = '<i class="bi bi-trophy-fill text-6xl text-yellow-500 trophy-bounce"></i>';
+                    winnerIcon.innerHTML = '<i class="bi bi-trophy-fill text-5xl sm:text-6xl text-yellow-500 trophy-bounce" style="animation: trophyBounce 1s infinite;"></i>';
                     winnerSub.textContent = '🏆 Congratulations! 🎉';
                     
                     document.getElementById('winnerDisplayBox').classList.add('winner-animate');
-                    setTimeout(() => {
-                        document.getElementById('winnerDisplayBox').classList.remove('winner-animate');
-                    }, 1500);
-                    
-                    // Only show confetti if the user wins
+                    setTimeout(() => document.getElementById('winnerDisplayBox').classList.remove('winner-animate'), 1500);
+
                     if (lastAddedUserName && winner === lastAddedUserName) {
                         createConfetti();
-                        showToast(`🎉 YOU WON! Congratulations ${winner}! 🎉`, 'trophy-fill', 'yellow');
+                        showToast(`🎉 YOU WON! ${winner}`, 'trophy-fill', 'yellow');
                     } else {
                         showToast(`${winner} is the winner!`, 'trophy-fill', 'yellow');
                     }
-                    
+
                     drawLoadingSpinner.classList.add('hidden');
                     drawWinnerBtn.disabled = false;
                     drawWinnerBtn.classList.remove('draw-active');
-                    
                     updateStats();
                     renderParticipants();
-                }, 1500);
+                }, 1400);
             }
-            
+
+            // reset raffle – keep last user if exists
             function resetRaffle() {
-                // Keep the user's name if they added one
-                const userNameToKeep = lastAddedUserName;
-                
+                const keepUser = lastAddedUserName;
                 participants = [
                     "Samson Adu",
                     "Olivia Owusuaa", 
@@ -730,76 +672,56 @@
                     "Manu Bismark",
                     "Jeffrey Osei"
                 ];
-                
-                // Re-add the user's name if it exists
-                if (userNameToKeep && !participants.includes(userNameToKeep)) {
-                    participants.push(userNameToKeep);
+                if (keepUser && !participants.includes(keepUser)) {
+                    participants.push(keepUser);
                 }
-                
-                // Keep the user reference
-                // lastAddedUserName stays the same
                 currentWinner = null;
                 drawHistory = [];
                 winners.clear();
-                
+
                 winnerNameSpan.textContent = '—';
-                winnerIcon.innerHTML = '<i class="bi bi-dash text-6xl text-gray-600"></i>';
+                winnerIcon.innerHTML = '<i class="bi bi-dash text-5xl sm:text-6xl text-gray-600"></i>';
                 winnerSub.textContent = 'Click draw to select a winner';
-                
                 renderParticipants();
                 updateStats();
-                
                 if (nameInput) nameInput.value = '';
                 nameFeedback.classList.add('hidden');
                 toggleSubmitButton();
-                
-                showToast('Raffle has been reset!', 'arrow-clockwise', 'blue');
+                showToast('Raffle reset', 'arrow-clockwise', 'blue');
             }
-            
+
             function addParticipantFromInput() {
-                const rawName = nameInput.value.trim();
-                if (rawName === '') {
-                    showToast('Please enter a name', 'exclamation-circle', 'red');
+                const raw = nameInput.value.trim();
+                if (raw === '') return;
+                if (participants.includes(raw)) {
+                    showToast('Name already registered', 'info-circle', 'yellow');
                     return;
                 }
-                
-                if (participants.includes(rawName)) {
-                    showToast('This name is already registered!', 'info-circle', 'yellow');
-                    return;
-                }
-                
-                participants.push(rawName);
-                lastAddedUserName = rawName;
+                participants.push(raw);
+                lastAddedUserName = raw;
                 nameInput.value = '';
-                
                 nameFeedback.classList.remove('hidden');
                 setTimeout(() => nameFeedback.classList.add('hidden'), 2000);
-                
                 renderParticipants();
-                
-                if (drawEl.classList.contains('hidden')) {
-                    showDrawScreen();
-                }
-                
-                showToast(`${rawName} added to the raffle!`, 'person-plus-fill', 'green');
+                if (drawEl.classList.contains('hidden')) showDrawScreen();
+                showToast(`${raw} added!`, 'person-plus-fill', 'green');
                 toggleSubmitButton();
             }
-            
+
             function showLoadingAndThenDetail() {
                 welcomeEl.classList.add('hidden');
                 detailEl.classList.add('hidden');
                 drawEl.classList.add('hidden');
                 loadingEl.classList.remove('hidden');
                 logoutBtn.classList.add('hidden');
-                
                 setTimeout(() => {
                     loadingEl.classList.add('hidden');
                     detailEl.classList.remove('hidden');
                     nameInput.focus();
                     toggleSubmitButton();
-                }, 1000);
+                }, 900);
             }
-            
+
             function showDrawScreen() {
                 detailEl.classList.add('hidden');
                 loadingEl.classList.add('hidden');
@@ -808,7 +730,7 @@
                 renderParticipants();
                 updateStats();
             }
-            
+
             function logout() {
                 participants = [
                     "Sarkodie Robert",
@@ -821,61 +743,74 @@
                 currentWinner = null;
                 drawHistory = [];
                 winners.clear();
-                
                 winnerNameSpan.textContent = '—';
-                winnerIcon.innerHTML = '<i class="bi bi-dash text-6xl text-gray-600"></i>';
+                winnerIcon.innerHTML = '<i class="bi bi-dash text-5xl sm:text-6xl text-gray-600"></i>';
                 winnerSub.textContent = 'Click draw to select a winner';
-                
                 if (nameInput) nameInput.value = '';
                 nameFeedback.classList.add('hidden');
-                
                 drawEl.classList.add('hidden');
                 detailEl.classList.add('hidden');
                 loadingEl.classList.add('hidden');
                 welcomeEl.classList.remove('hidden');
                 logoutBtn.classList.add('hidden');
-                
                 renderParticipants();
                 updateStats();
-                
-                showToast('Logged out successfully!', 'box-arrow-right', 'blue');
+                showToast('Logged out', 'box-arrow-right', 'blue');
             }
-            
-            // Event Listeners
+
+            // ----- EVENT LISTENERS -----
             tryLuckBtn.addEventListener('click', showLoadingAndThenDetail);
             submitNameBtn.addEventListener('click', addParticipantFromInput);
-            
-            nameInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
+            nameInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && nameInput.value.trim() !== '') {
                     e.preventDefault();
-                    if (nameInput.value.trim() !== '') {
-                        addParticipantFromInput();
-                    }
+                    addParticipantFromInput();
                 }
             });
-            
             nameInput.addEventListener('input', toggleSubmitButton);
             drawWinnerBtn.addEventListener('click', performDrawWithDelay);
             resetRaffleBtn.addEventListener('click', resetRaffle);
             logoutBtn.addEventListener('click', logout);
-            
-            // Keyboard shortcuts
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && !drawEl.classList.contains('hidden')) {
-                    logout();
-                }
+
+            // keyboard: space draw, escape logout
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !drawEl.classList.contains('hidden')) logout();
                 if (e.key === ' ' && !drawEl.classList.contains('hidden') && e.target.tagName !== 'INPUT') {
                     e.preventDefault();
                     performDrawWithDelay();
                 }
             });
-            
-            // Initialize
+
+            // initial particles
             createParticles();
             renderParticipants();
             updateStats();
             toggleSubmitButton();
+
+            // ensure no body overflow on resize (already)
         })();
     </script>
+
+    <!-- small style for trophy bounce -->
+    <style>
+        @keyframes trophyBounce {
+            0%,100%{ transform: translateY(0); }
+            50%{ transform: translateY(-6px); }
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .xs\:inline {
+            display: inline;
+        }
+        @media (max-width: 480px) {
+            .xs\:inline { display: none; }
+        }
+        /* safe truncate */
+        .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    </style>
 </body>
 </html>
