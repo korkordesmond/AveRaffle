@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <!-- responsive meta: key for mobile, no overflow -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes, viewport-fit=cover">
     <meta name="description" content="Raffle UP – mobile‑first raffle draw. Win gadgets, gift cards & more. Fully responsive, no overflow.">
     <meta name="keywords" content="raffle, mobile friendly, lottery, draw, win prizes, giveaway">
@@ -14,9 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Raffle UP · mobile ready</title>
+    <title>Raffle UP</title>
     <style>
-        /* strict reset: no unexpected overflow */
         * { 
             box-sizing: border-box; 
             margin: 0; 
@@ -36,10 +34,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 0.75rem; /* safe padding for mobile */
+            padding: 0.75rem; 
         }
         
-        /* animated background subtle */
         .bg-animated {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
             background-size: 400% 400%;
@@ -50,7 +47,6 @@
             50% { background-position: 100% 50%; }
         }
         
-        /* particle fixed but contained */
         .particle {
             position: fixed;
             width: 4px;
@@ -68,7 +64,6 @@
             100% { transform: translateY(-110vh) translateX(40px); opacity: 0; }
         }
         
-        /* glass with safe blur */
         .glass {
             background: rgba(15, 23, 42, 0.75);
             backdrop-filter: blur(12px);
@@ -78,7 +73,6 @@
             max-width: 100%;
         }
         
-        /* responsive container width control */
         .container-responsive {
             width: 100%;
             max-width: 100%;
@@ -86,14 +80,12 @@
             margin-right: auto;
         }
         
-        /* cards & elements never overflow */
         .card-limiter {
             max-width: 100%;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
         
-        /* scrollable participant list – smooth on mobile */
         .participant-scroll {
             max-height: 360px;
             overflow-y: auto;
@@ -113,13 +105,11 @@
             border-radius: 10px;
         }
         
-        /* all images, svg, icons max-width */
         img, svg, .bi {
             max-width: 100%;
             vertical-align: middle;
         }
         
-        /* spinner */
         .spinner {
             border: 4px solid rgba(59, 130, 246, 0.2);
             border-left-color: #3b82f6;
@@ -130,7 +120,6 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         
-        /* skeleton */
         .skeleton {
             background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
             background-size: 200% 100%;
@@ -141,7 +130,6 @@
             100% { background-position: -200% 0; } 
         }
         
-        /* mobile first: avoid tiny padding issues */
         .responsive-pad {
             padding: 1.25rem 1rem;
         }
@@ -155,7 +143,6 @@
             .text-4xl { font-size: 1.9rem; }
         }
         
-        /* winner pulse */
         .winner-animate {
             animation: winnerPulse 0.5s ease 3;
         }
@@ -164,7 +151,6 @@
             50% { transform: scale(1.02); }
         }
         
-        /* confetti contained */
         .confetti {
             position: fixed;
             width: 8px;
@@ -177,7 +163,6 @@
             to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
         
-        /* fade in */
         .fade-in {
             animation: fadeIn 0.4s ease-out;
         }
@@ -186,7 +171,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* hover-lift minimal on mobile */
         .hover-lift {
             transition: transform 0.25s ease, box-shadow 0.25s;
         }
@@ -197,7 +181,6 @@
             }
         }
         
-        /* draw active */
         .draw-active {
             animation: drawPulse 1s infinite;
         }
@@ -206,7 +189,6 @@
             50% { box-shadow: 0 0 24px rgba(59,130,246,0.8); }
         }
         
-        /* toast: mobile width */
         .toast {
             position: fixed;
             top: 12px;
@@ -230,13 +212,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* disable overflow anywhere */
         .no-ovf {
             overflow-x: hidden;
             overflow-y: visible;
         }
         
-        /* avatar initials */
         .avatar-circle {
             width: 40px;
             height: 40px;
@@ -250,7 +230,6 @@
             flex-shrink: 0;
         }
         
-        /* logout button mobile */
         .logout-fab {
             bottom: 16px;
             right: 16px;
@@ -259,22 +238,18 @@
             box-shadow: 0 10px 26px rgba(0,0,0,0.6);
         }
         
-        /* fix input zoom on mobile */
         input, button {
-            font-size: 16px; /* avoid zoom on focus iOS */
+            font-size: 16px; 
         }
     </style>
 </head>
 <body class="bg-animated relative min-h-screen w-full flex items-center justify-center p-3 sm:p-5 no-ovf">
 
-    <!-- floating particles container -->
     <div id="particlesContainer" class="fixed inset-0 w-full h-full pointer-events-none z-0"></div>
 
-    <!-- WELCOME SCREEN – fully responsive -->
     <div id="welcomeContainer" class="fade-in container-responsive relative glass rounded-3xl shadow-2xl w-full max-w-4xl mx-auto responsive-pad z-10">
         <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-600/5 to-transparent pointer-events-none"></div>
         <div class="relative flex flex-col items-center text-center w-full">
-            <!-- logo/trophy group -->
             <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full shadow-2xl glow flex items-center justify-center mb-4 bg-[#1e293b]/50 backdrop-blur-sm p-2">
                 <img src="raffle-up-icon.svg" alt="Raffle UP" class="w-full h-full object-contain">
             </div>
@@ -293,7 +268,6 @@
         </div>
     </div>
 
-    <!-- DETAIL ENTRY (name) – fully responsive -->
     <div id="detailContainer" class="fade-in hidden container-responsive glass rounded-3xl w-full max-w-2xl mx-auto responsive-pad z-10">
         <div class="flex flex-col items-center w-full">
             <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 shadow-2xl glow flex items-center justify-center mb-4">
@@ -326,10 +300,8 @@
         </div>
     </div>
 
-    <!-- DRAW SCREEN – responsive grid, no overflow -->
     <div id="drawContainer" class="fade-in hidden container-responsive glass rounded-3xl w-full max-w-6xl mx-auto responsive-pad z-10">
         <div class="w-full">
-            <!-- header -->
             <div class="flex flex-col items-center mb-6">
                 <div class="w-20 h-20 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 shadow-2xl glow flex items-center justify-center mb-3">
                     <i class="bi bi-trophy-fill text-3xl text-white"></i>
@@ -337,9 +309,7 @@
                 <h2 class="text-3xl sm:text-4xl font-bold gradient-text">RAFFLE DRAW</h2>
             </div>
 
-            <!-- 2 cols: participants & winner (stack on mobile) -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6 w-full">
-                <!-- PARTICIPANTS CARD -->
                 <div class="glass rounded-2xl p-4 sm:p-5 hover-lift flex flex-col w-full">
                     <div class="flex items-center justify-between w-full mb-3">
                         <div class="flex items-center gap-3 min-w-0">
@@ -356,7 +326,6 @@
                         </div>
                     </div>
 
-                    <!-- scrollable participant list, with fallback -->
                     <div class="participant-scroll w-full pr-1" style="max-height: 340px;">
                         <div id="participantList" class="space-y-2 w-full"></div>
                         <div id="emptyParticipants" class="hidden text-center py-10 text-gray-400 w-full">
@@ -366,7 +335,6 @@
                     </div>
                 </div>
 
-                <!-- WINNER & DRAW CARD -->
                 <div class="glass rounded-2xl p-4 sm:p-5 hover-lift flex flex-col w-full">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center flex-shrink-0">
@@ -378,7 +346,6 @@
                         </div>
                     </div>
 
-                    <!-- winner display box: responsive text -->
                     <div id="winnerDisplayBox" class="glass rounded-2xl p-5 sm:p-7 text-center flex flex-col items-center justify-center min-h-[200px] sm:min-h-[240px] w-full">
                         <div id="winnerIcon" class="mb-2">
                             <i class="bi bi-dash text-5xl sm:text-6xl text-gray-600"></i>
@@ -387,7 +354,6 @@
                         <p id="winnerSub" class="text-xs sm:text-sm text-gray-400 mt-1">Click draw to select a winner</p>
                     </div>
 
-                    <!-- action buttons: stacked on small, row on big -->
                     <div class="flex flex-col sm:flex-row gap-3 mt-5 w-full">
                         <button id="drawWinnerBtn" class="ripple flex-1 px-4 py-3 sm:py-4 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold shadow-lg hover-lift flex items-center justify-center gap-2 text-base sm:text-lg">
                             <i class="bi bi-shuffle text-xl sm:text-2xl"></i>
@@ -401,7 +367,6 @@
                 </div>
             </div>
 
-            <!-- STATS: 3 per row, tiny text if needed -->
             <div class="grid grid-cols-3 gap-2 sm:gap-4 mt-5 w-full">
                 <div class="glass rounded-xl p-3 text-center hover-lift flex flex-col items-center">
                     <i class="bi bi-ticket-perforated text-2xl sm:text-3xl text-blue-400 mb-1"></i>
@@ -422,7 +387,6 @@
         </div>
     </div>
 
-    <!-- LOADING screen -->
     <div id="loadingContainer" class="fade-in hidden container-responsive glass rounded-3xl w-full max-w-2xl mx-auto p-8 z-10">
         <div class="flex flex-col items-center py-8 sm:py-12">
             <div class="spinner w-12 h-12 sm:w-14 sm:h-14 mb-6"></div>
@@ -435,7 +399,6 @@
         </div>
     </div>
 
-    <!-- DRAW LOADING SPINNER (fixed but contained) -->
     <div id="drawLoadingSpinner" class="hidden fixed inset-x-0 top-1/2 -translate-y-1/2 flex justify-center items-center z-50 px-4">
         <div class="glass px-5 sm:px-8 py-5 rounded-2xl shadow-2xl glow flex items-center gap-4 max-w-sm w-auto">
             <div class="spinner w-8 h-8 sm:w-10 sm:h-10"></div>
@@ -446,20 +409,17 @@
         </div>
     </div>
 
-    <!-- LOGOUT BUTTON - mobile floating -->
     <button id="logoutBtn" class="ripple hidden logout-fab fixed bottom-4 right-4 sm:bottom-6 sm:right-6 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold shadow-xl hover-lift flex items-center gap-2 z-50 text-sm sm:text-base">
         <i class="bi bi-box-arrow-right text-lg sm:text-xl"></i>
         <span class="hidden xs:inline sm:inline">LOGOUT</span>
     </button>
 
-    <!-- TOAST container -->
     <div id="toastContainer" class="fixed top-0 left-0 right-0 flex justify-center pointer-events-none z-[100] p-3"></div>
 
     <script>
         (function() {
             "use strict";
 
-            // ----- DATA -----
             let participants = [
                 "Benjamin Miller",
                 "David Smith", 
@@ -472,7 +432,6 @@
             let drawHistory = [];
             let winners = new Set();
 
-            // ----- DOM references -----
             const welcomeEl = document.getElementById('welcomeContainer');
             const detailEl = document.getElementById('detailContainer');
             const drawEl = document.getElementById('drawContainer');
@@ -495,7 +454,6 @@
             const winRateEl = document.getElementById('winRate');
             const emptyParticipantsEl = document.getElementById('emptyParticipants');
 
-            // ----- helpers -----
             function escapeHtml(unsafe) {
                 if (!unsafe) return '';
                 return unsafe.replace(/[&<>"']/g, (m) => {
@@ -522,7 +480,6 @@
                 }, 3000);
             }
 
-            // confetti (fewer, mobile friendly)
             function createConfetti() {
                 const colors = ['#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'];
                 for (let i = 0; i < 50; i++) {
@@ -552,7 +509,6 @@
                 }
             }
 
-            // update stats 
             function updateStats() {
                 totalDrawsEl.textContent = drawHistory.length;
                 uniqueWinnersEl.textContent = winners.size;
@@ -569,7 +525,6 @@
                 submitNameBtn.disabled = val === '';
             }
 
-            // render participants with responsive cards
             function renderParticipants() {
                 if (!participantListDiv) return;
                 participantListDiv.innerHTML = '';
@@ -604,13 +559,11 @@
                         `;
                         return { card, isUser };
                     });
-                    // sort YOU first
                     items.sort((a,b) => b.isUser - a.isUser).forEach(i => participantListDiv.appendChild(i.card));
                 }
                 participantCountSpan.textContent = participants.length;
             }
 
-            // draw logic with shuffle effect (no overflow)
             function performDrawWithDelay() {
                 if (participants.length === 0) {
                     showToast('No participants', 'exclamation-triangle', 'yellow');
@@ -662,7 +615,6 @@
                 }, 1400);
             }
 
-            // reset raffle – keep last user if exists
             function resetRaffle() {
                 const keepUser = lastAddedUserName;
                 participants = [
@@ -758,7 +710,6 @@
                 showToast('Logged out', 'box-arrow-right', 'blue');
             }
 
-            // ----- EVENT LISTENERS -----
             tryLuckBtn.addEventListener('click', showLoadingAndThenDetail);
             submitNameBtn.addEventListener('click', addParticipantFromInput);
             nameInput.addEventListener('keypress', (e) => {
@@ -772,7 +723,6 @@
             resetRaffleBtn.addEventListener('click', resetRaffle);
             logoutBtn.addEventListener('click', logout);
 
-            // keyboard: space draw, escape logout
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && !drawEl.classList.contains('hidden')) logout();
                 if (e.key === ' ' && !drawEl.classList.contains('hidden') && e.target.tagName !== 'INPUT') {
@@ -781,17 +731,14 @@
                 }
             });
 
-            // initial particles
             createParticles();
             renderParticipants();
             updateStats();
             toggleSubmitButton();
 
-            // ensure no body overflow on resize (already)
         })();
     </script>
 
-    <!-- small style for trophy bounce -->
     <style>
         @keyframes trophyBounce {
             0%,100%{ transform: translateY(0); }
@@ -809,7 +756,6 @@
         @media (max-width: 480px) {
             .xs\:inline { display: none; }
         }
-        /* safe truncate */
         .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     </style>
 </body>
