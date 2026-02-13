@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Raffle UP - Your chance to win big! Join our exciting raffle for amazing prizes including gadgets, gift cards, and once-in-a-lifetime experiences.">
+    <meta name="keywords" content="raffle, lottery, draw, win, prizes, giveaway, contest">
+    <meta name="author" content="Hackie Nawhat">
+    <meta name="theme-color" content="#3b82f6">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="icon" href="raffle-up-icon.svg" type="image/svg">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Raffle UP</title>
+    <style>
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background */
+        .bg-animated {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: rgba(59, 130, 246, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 20s infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+        
+        /* Enhanced spinner */
+        .spinner {
+            border: 4px solid rgba(59, 130, 246, 0.2);
+            border-left-color: #3b82f6;
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin { 
+            to { transform: rotate(360deg); } 
+        }
+        
+        /* Skeleton loader */
+        .skeleton {
+            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+            background-size: 200% 100%;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse { 
+            0% { background-position: 200% 0; } 
+            100% { background-position: -200% 0; } 
+        }
+        
+        /* Custom scrollbar */
+        .custom-scroll::-webkit-scrollbar { width: 8px; }
+        .custom-scroll::-webkit-scrollbar-track { 
+            background: #1e293b; 
+            border-radius: 10px; 
+        }
+        .custom-scroll::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, #3b82f6, #2563eb);
+            border-radius: 10px; 
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { 
+            background: linear-gradient(180deg, #2563eb, #1d4ed8);
+        }
+        
+        /* Glass morphism effect */
+        .glass {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        /* Glow effect */
+        .glow {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3),
+                        0 0 40px rgba(59, 130, 246, 0.2),
+                        0 0 60px rgba(59, 130, 246, 0.1);
+        }
+        
+        /* Winner animation */
+        @keyframes winnerPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .winner-animate {
+            animation: winnerPulse 0.5s ease-in-out 3;
+        }
+        
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Fade in animation */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Hover effects */
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* Participant card animation */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .participant-card {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        /* Button ripple effect */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .ripple:active::after {
+            width: 300px;
+            height: 300px;
+        }
+        
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Trophy bounce */
+        @keyframes trophyBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .trophy-bounce {
+            animation: trophyBounce 1s ease-in-out infinite;
+        }
+        
+        /* Stats counter animation */
+        @keyframes countUp {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .count-animate {
+            animation: countUp 0.4s ease-out;
+        }
+        
+        /* Disabled state */
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        
+        /* Drawing animation */
+        @keyframes drawPulse {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            }
+            50% { 
+                box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
+            }
+        }
+        
+        .draw-active {
+            animation: drawPulse 1s ease-in-out infinite;
+        }
+        
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            animation: slideInFromRight 0.4s ease-out;
+        }
+        
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Loading dots */
+        .loading-dots span {
+            animation: loadingDot 1.4s infinite;
+        }
+        
+        .loading-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .loading-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes loadingDot {
+            0%, 80%, 100% { opacity: 0.3; }
+            40% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-animated relative min-h-screen flex flex-col items-center justify-center p-4">
+    <!-- Floating particles background -->
+    <div id="particlesContainer"></div>
+    
+    <!-- Welcome Screen -->
+    <div id="welcomeContainer" class="fade-in container relative glass p-6 rounded-3xl lg:max-w-[65%] mx-auto shadow-2xl">
+        <div class="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-500/10 to-transparent"></div>
+        </div>
+        
+        <div class="relative">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-32 h-32 rounded-full shadow-2xl glow mb-6">
+                    <img src="raffle-up-icon.svg"/>
+                </div>
+                <h1 class="text-5xl font-bold mb-4 gradient-text">RAFFLE UP</h1>
+                <p class="text-2xl font-semibold text-white mb-4">🎉 Your Chance to Win Big! 🎉</p>
+                <p class="text-base text-gray-300 leading-relaxed max-w-2xl mx-auto">
+                    Step right in and join our exciting raffle! Every ticket gives you a shot at amazing prizes—whether it's gadgets, gift cards, or once-in-a-lifetime experiences. It's simple, fun, and full of surprises. Don't miss out—your next win could be just a ticket away!
+                </p>
+            </div>
+            
+            <div class="flex justify-center gap-4 mt-8">
+                <button id="tryLuckBtn" class="ripple group px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold shadow-lg hover-lift flex items-center gap-3 text-lg">
+                    <i class="bi bi-rocket-takeoff text-2xl"></i>
+                    TRY YOUR LUCK
+                    <i class="bi bi-arrow-right text-xl group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Detail Entry Screen -->
+    <div id="detailContainer" class="fade-in hidden container glass relative p-6 rounded-3xl lg:max-w-[65%] mx-auto shadow-2xl">
+        <div class="relative">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-28 h-28 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 shadow-2xl glow mb-6">
+                    <i class="bi bi-person-plus-fill text-5xl text-white"></i>
+                </div>
+                <h2 class="text-4xl font-bold gradient-text mb-2">GET INVOLVED NOW!!</h2>
+                <p class="text-gray-400">Enter your name to join the raffle</p>
+            </div>
+            
+            <div class="flex flex-col items-center gap-6">
+                <div class="w-full max-w-md">
+                    <div class="glass rounded-2xl p-1 glow">
+                        <div class="flex items-center gap-2">
+                            <input 
+                                id="participantNameInput" 
+                                type="text" 
+                                placeholder="Enter your name" 
+                                class="flex-1 h-14 text-lg px-6 rounded-xl bg-[#1e293b] focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-400 transition-all"
+                                maxlength="50"
+                            >
+                            <button id="submitNameBtn" disabled class="ripple h-14 w-14 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 flex items-center justify-center transition-all hover-lift disabled:opacity-50 disabled:cursor-not-allowed">
+                                <i class="bi bi-arrow-right text-2xl text-white"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <p id="nameFeedback" class="text-sm text-green-400 mt-3 text-center hidden flex items-center justify-center gap-2">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Name added successfully!</span>
+                    </p>
+                    <div class="text-center mt-4">
+                        <p class="text-xs text-gray-500">Press Enter or click the button to submit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Draw Screen -->
+    <div id="drawContainer" class="fade-in hidden container glass relative p-6 rounded-3xl lg:max-w-[85%] xl:max-w-[75%] mx-auto shadow-2xl">
+        <div class="relative">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 shadow-2xl glow mb-4">
+                    <i class="bi bi-trophy-fill text-4xl text-white"></i>
+                </div>
+                <h2 class="text-4xl font-bold gradient-text">RAFFLE DRAW</h2>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-6 mb-6">
+                <!-- Participants Section -->
+                <div class="glass rounded-2xl p-6 hover-lift">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                                <i class="bi bi-people-fill text-2xl text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-white">Participants</h3>
+                                <p class="text-xs text-gray-400">Total registered</p>
+                            </div>
+                        </div>
+                        <div class="count-animate bg-gradient-to-br from-blue-600 to-blue-700 text-white text-2xl font-bold px-4 py-2 rounded-xl shadow-lg">
+                            <span id="participantCount">5</span>
+                        </div>
+                    </div>
+                    
+                    <div class="max-h-[400px] overflow-y-auto custom-scroll">
+                        <div id="participantList" class="space-y-2"></div>
+                        <div id="emptyParticipants" class="hidden text-center py-12 text-gray-400">
+                            <i class="bi bi-inbox text-5xl mb-3 block"></i>
+                            <p>No participants yet</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Winner Display Section -->
+                <div class="glass rounded-2xl p-6 hover-lift">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
+                            <i class="bi bi-star-fill text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-white">Draw Results</h3>
+                            <p class="text-xs text-gray-400">Winner announcement</p>
+                        </div>
+                    </div>
+                    
+                    <div id="winnerDisplayBox" class="glass rounded-2xl p-8 text-center min-h-[300px] flex flex-col items-center justify-center transition-all">
+                        <div id="winnerIcon" class="mb-4">
+                            <i class="bi bi-dash text-6xl text-gray-600"></i>
+                        </div>
+                        <h4 id="winnerName" class="text-3xl font-bold text-white mb-2">—</h4>
+                        <p id="winnerSub" class="text-sm text-gray-400">Click draw to select a winner</p>
+                    </div>
+                    
+                    <div class="flex gap-3 mt-6">
+                        <button id="drawWinnerBtn" class="ripple flex-1 px-6 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold shadow-lg hover-lift flex items-center justify-center gap-2 text-lg">
+                            <i class="bi bi-shuffle text-2xl"></i>
+                            DRAW WINNER
+                        </button>
+                        <button id="resetRaffleBtn" class="ripple px-6 py-4 rounded-xl bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-white font-semibold shadow-lg hover-lift flex items-center justify-center gap-2">
+                            <i class="bi bi-arrow-clockwise text-2xl"></i>
+                            RESET
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Statistics Section -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="glass rounded-xl p-4 text-center hover-lift">
+                    <i class="bi bi-ticket-perforated text-3xl text-blue-400 mb-2"></i>
+                    <p class="text-2xl font-bold text-white" id="totalDraws">0</p>
+                    <p class="text-xs text-gray-400">Total Draws</p>
+                </div>
+                <div class="glass rounded-xl p-4 text-center hover-lift">
+                    <i class="bi bi-trophy text-3xl text-yellow-400 mb-2"></i>
+                    <p class="text-2xl font-bold text-white" id="uniqueWinners">0</p>
+                    <p class="text-xs text-gray-400">Unique Winners</p>
+                </div>
+                <div class="glass rounded-xl p-4 text-center hover-lift">
+                    <i class="bi bi-graph-up text-3xl text-green-400 mb-2"></i>
+                    <p class="text-2xl font-bold text-white" id="winRate">0%</p>
+                    <p class="text-xs text-gray-400">Your Win Rate</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loading Screen -->
+    <div id="loadingContainer" class="fade-in hidden container glass relative p-6 rounded-3xl lg:max-w-[65%] mx-auto shadow-2xl">
+        <div class="text-center py-12">
+            <div class="spinner mx-auto mb-6"></div>
+            <div class="space-y-4 max-w-md mx-auto">
+                <div class="skeleton h-8 w-full rounded-lg"></div>
+                <div class="skeleton h-8 w-4/5 mx-auto rounded-lg"></div>
+                <div class="skeleton h-8 w-3/5 mx-auto rounded-lg"></div>
+            </div>
+            <p class="text-gray-400 mt-6 loading-dots">
+                Loading<span>.</span><span>.</span><span>.</span>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Draw Loading Spinner -->
+    <div id="drawLoadingSpinner" class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
+        <div class="glass px-8 py-6 rounded-2xl shadow-2xl glow">
+            <div class="flex items-center gap-4">
+                <div class="spinner"></div>
+                <div>
+                    <p class="text-white font-semibold text-lg">Drawing Winner</p>
+                    <p class="text-gray-400 text-sm loading-dots">Please wait<span>.</span><span>.</span><span>.</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Logout Button -->
+    <button id="logoutBtn" class="ripple hidden fixed bottom-6 right-6 px-6 py-3 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold shadow-lg hover-lift flex items-center gap-2 z-50">
+        <i class="bi bi-box-arrow-right text-xl"></i>
+        LOGOUT
+    </button>
+    
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+    
+    <script>
+        (function() {
+            let participants = [
+                "Benjamin Miller",
+                "David Smith", 
+                "Joseph Clintonson",
+                "Charles Brown",
+                "Emily Genevieve"
+            ];
+            let currentWinner = null;
+            let lastAddedUserName = null;
+            let drawHistory = [];
+            let winners = new Set();
+            
+            const welcomeEl = document.getElementById('welcomeContainer');
+            const detailEl = document.getElementById('detailContainer');
+            const drawEl = document.getElementById('drawContainer');
+            const loadingEl = document.getElementById('loadingContainer');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const drawLoadingSpinner = document.getElementById('drawLoadingSpinner');
+            const tryLuckBtn = document.getElementById('tryLuckBtn');
+            const submitNameBtn = document.getElementById('submitNameBtn');
+            const nameInput = document.getElementById('participantNameInput');
+            const nameFeedback = document.getElementById('nameFeedback');
+            const participantListDiv = document.getElementById('participantList');
+            const participantCountSpan = document.getElementById('participantCount');
+            const winnerNameSpan = document.getElementById('winnerName');
+            const winnerIcon = document.getElementById('winnerIcon');
+            const winnerSub = document.getElementById('winnerSub');
+            const drawWinnerBtn = document.getElementById('drawWinnerBtn');
+            const resetRaffleBtn = document.getElementById('resetRaffleBtn');
+            const totalDrawsEl = document.getElementById('totalDraws');
+            const uniqueWinnersEl = document.getElementById('uniqueWinners');
+            const winRateEl = document.getElementById('winRate');
+            const emptyParticipantsEl = document.getElementById('emptyParticipants');
+            
+            // Utility Functions
+            function escapeHtml(unsafe) {
+                if (!unsafe) return '';
+                return unsafe.replace(/[&<>"']/g, function (m) {
+                    const chars = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+                    return chars[m];
+                });
+            }
+            
+            function showToast(message, icon = 'check-circle-fill', color = 'green') {
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <i class="bi bi-${icon} text-2xl text-${color}-400"></i>
+                        <span class="text-white font-medium">${message}</span>
+                    </div>
+                `;
+                document.getElementById('toastContainer').appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.animation = 'slideInFromRight 0.4s ease-out reverse';
+                    setTimeout(() => toast.remove(), 400);
+                }, 3000);
+            }
+            
+            function createConfetti() {
+                const colors = ['#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'];
+                for (let i = 0; i < 100; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = '-10px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animation = `confettiFall ${2 + Math.random() * 3}s linear forwards`;
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 5000);
+                }
+            }
+            
+            function createParticles() {
+                const container = document.getElementById('particlesContainer');
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + 'vw';
+                    particle.style.animationDelay = Math.random() * 10 + 's';
+                    particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                    container.appendChild(particle);
+                }
+            }
+            
+            function updateStats() {
+                totalDrawsEl.textContent = drawHistory.length;
+                totalDrawsEl.classList.add('count-animate');
+                setTimeout(() => totalDrawsEl.classList.remove('count-animate'), 400);
+                
+                uniqueWinnersEl.textContent = winners.size;
+                uniqueWinnersEl.classList.add('count-animate');
+                setTimeout(() => uniqueWinnersEl.classList.remove('count-animate'), 400);
+                
+                if (lastAddedUserName && drawHistory.length > 0) {
+                    const userWins = drawHistory.filter(w => w === lastAddedUserName).length;
+                    const rate = ((userWins / drawHistory.length) * 100).toFixed(1);
+                    winRateEl.textContent = rate + '%';
+                } else {
+                    winRateEl.textContent = '0%';
+                }
+                winRateEl.classList.add('count-animate');
+                setTimeout(() => winRateEl.classList.remove('count-animate'), 400);
+            }
+            
+            function toggleSubmitButton() {
+                const hasValue = nameInput.value.trim() !== '';
+                submitNameBtn.disabled = !hasValue;
+                
+                if (hasValue) {
+                    submitNameBtn.classList.remove('opacity-50');
+                } else {
+                    submitNameBtn.classList.add('opacity-50');
+                }
+            }
+            
+            function renderParticipants() {
+                if (!participantListDiv) return;
+                
+                participantListDiv.innerHTML = '';
+                
+                if (participants.length === 0) {
+                    emptyParticipantsEl.classList.remove('hidden');
+                    participantListDiv.classList.add('hidden');
+                } else {
+                    emptyParticipantsEl.classList.add('hidden');
+                    participantListDiv.classList.remove('hidden');
+                    
+                    let items = participants.map((name, index) => {
+                        const isUser = lastAddedUserName && name === lastAddedUserName;
+                        const card = document.createElement('div');
+                        card.className = 'participant-card glass rounded-xl p-4 hover-lift transition-all';
+                        
+                        const badges = [];
+                        if (isUser) {
+                            badges.push('<span class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full">YOU</span>');
+                        }
+                        if (currentWinner === name) {
+                            badges.push('<span class="bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1"><i class="bi bi-trophy-fill"></i>WINNER</span>');
+                        }
+                        
+                        card.innerHTML = `
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold">
+                                        ${escapeHtml(name.charAt(0).toUpperCase())}
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-medium">${escapeHtml(name)}</p>
+                                        <p class="text-xs text-gray-400">Participant #${index + 1}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    ${badges.join('')}
+                                </div>
+                            </div>
+                        `;
+                        
+                        return { card, isUser, index };
+                    });
+                    
+                    // Sort to put user first
+                    items.sort((a, b) => b.isUser - a.isUser);
+                    items.forEach(item => participantListDiv.appendChild(item.card));
+                }
+                
+                participantCountSpan.textContent = participants.length;
+                participantCountSpan.classList.add('count-animate');
+                setTimeout(() => participantCountSpan.classList.remove('count-animate'), 400);
+            }
+            
+            function performDrawWithDelay() {
+                if (participants.length === 0) {
+                    showToast('No participants to draw from!', 'exclamation-triangle', 'yellow');
+                    winnerNameSpan.textContent = '⚠️ No Participants';
+                    winnerIcon.innerHTML = '<i class="bi bi-exclamation-triangle text-6xl text-yellow-500"></i>';
+                    winnerSub.textContent = 'Add at least one name to start';
+                    return;
+                }
+                
+                drawLoadingSpinner.classList.remove('hidden');
+                drawWinnerBtn.disabled = true;
+                drawWinnerBtn.classList.add('draw-active');
+                
+                // Shuffle animation
+                let shuffleCount = 0;
+                const shuffleInterval = setInterval(() => {
+                    const randomIndex = Math.floor(Math.random() * participants.length);
+                    winnerNameSpan.textContent = participants[randomIndex];
+                    shuffleCount++;
+                    
+                    if (shuffleCount > 10) {
+                        clearInterval(shuffleInterval);
+                    }
+                }, 100);
+                
+                setTimeout(() => {
+                    const randomIndex = Math.floor(Math.random() * participants.length);
+                    const winner = participants[randomIndex];
+                    currentWinner = winner;
+                    drawHistory.push(winner);
+                    winners.add(winner);
+                    
+                    winnerNameSpan.textContent = winner;
+                    winnerIcon.innerHTML = '<i class="bi bi-trophy-fill text-6xl text-yellow-500 trophy-bounce"></i>';
+                    winnerSub.textContent = '🏆 Congratulations! 🎉';
+                    
+                    document.getElementById('winnerDisplayBox').classList.add('winner-animate');
+                    setTimeout(() => {
+                        document.getElementById('winnerDisplayBox').classList.remove('winner-animate');
+                    }, 1500);
+                    
+                    // Only show confetti if the user wins
+                    if (lastAddedUserName && winner === lastAddedUserName) {
+                        createConfetti();
+                        showToast(`🎉 YOU WON! Congratulations ${winner}! 🎉`, 'trophy-fill', 'yellow');
+                    } else {
+                        showToast(`${winner} is the winner!`, 'trophy-fill', 'yellow');
+                    }
+                    
+                    drawLoadingSpinner.classList.add('hidden');
+                    drawWinnerBtn.disabled = false;
+                    drawWinnerBtn.classList.remove('draw-active');
+                    
+                    updateStats();
+                    renderParticipants();
+                }, 1500);
+            }
+            
+            function resetRaffle() {
+                // Keep the user's name if they added one
+                const userNameToKeep = lastAddedUserName;
+                
+                participants = [
+                    "Samson Adu",
+                    "Olivia Owusuaa", 
+                    "Kingsley Agyapong",
+                    "Manu Bismark",
+                    "Jeffrey Osei"
+                ];
+                
+                // Re-add the user's name if it exists
+                if (userNameToKeep && !participants.includes(userNameToKeep)) {
+                    participants.push(userNameToKeep);
+                }
+                
+                // Keep the user reference
+                // lastAddedUserName stays the same
+                currentWinner = null;
+                drawHistory = [];
+                winners.clear();
+                
+                winnerNameSpan.textContent = '—';
+                winnerIcon.innerHTML = '<i class="bi bi-dash text-6xl text-gray-600"></i>';
+                winnerSub.textContent = 'Click draw to select a winner';
+                
+                renderParticipants();
+                updateStats();
+                
+                if (nameInput) nameInput.value = '';
+                nameFeedback.classList.add('hidden');
+                toggleSubmitButton();
+                
+                showToast('Raffle has been reset!', 'arrow-clockwise', 'blue');
+            }
+            
+            function addParticipantFromInput() {
+                const rawName = nameInput.value.trim();
+                if (rawName === '') {
+                    showToast('Please enter a name', 'exclamation-circle', 'red');
+                    return;
+                }
+                
+                if (participants.includes(rawName)) {
+                    showToast('This name is already registered!', 'info-circle', 'yellow');
+                    return;
+                }
+                
+                participants.push(rawName);
+                lastAddedUserName = rawName;
+                nameInput.value = '';
+                
+                nameFeedback.classList.remove('hidden');
+                setTimeout(() => nameFeedback.classList.add('hidden'), 2000);
+                
+                renderParticipants();
+                
+                if (drawEl.classList.contains('hidden')) {
+                    showDrawScreen();
+                }
+                
+                showToast(`${rawName} added to the raffle!`, 'person-plus-fill', 'green');
+                toggleSubmitButton();
+            }
+            
+            function showLoadingAndThenDetail() {
+                welcomeEl.classList.add('hidden');
+                detailEl.classList.add('hidden');
+                drawEl.classList.add('hidden');
+                loadingEl.classList.remove('hidden');
+                logoutBtn.classList.add('hidden');
+                
+                setTimeout(() => {
+                    loadingEl.classList.add('hidden');
+                    detailEl.classList.remove('hidden');
+                    nameInput.focus();
+                    toggleSubmitButton();
+                }, 1000);
+            }
+            
+            function showDrawScreen() {
+                detailEl.classList.add('hidden');
+                loadingEl.classList.add('hidden');
+                drawEl.classList.remove('hidden');
+                logoutBtn.classList.remove('hidden');
+                renderParticipants();
+                updateStats();
+            }
+            
+            function logout() {
+                participants = [
+                    "Sarkodie Robert",
+                    "Jessie Opoku", 
+                    "Emmanuel Thompson",
+                    "Larweh Justin",
+                    "Pedro Denny"
+                ];
+                lastAddedUserName = null;
+                currentWinner = null;
+                drawHistory = [];
+                winners.clear();
+                
+                winnerNameSpan.textContent = '—';
+                winnerIcon.innerHTML = '<i class="bi bi-dash text-6xl text-gray-600"></i>';
+                winnerSub.textContent = 'Click draw to select a winner';
+                
+                if (nameInput) nameInput.value = '';
+                nameFeedback.classList.add('hidden');
+                
+                drawEl.classList.add('hidden');
+                detailEl.classList.add('hidden');
+                loadingEl.classList.add('hidden');
+                welcomeEl.classList.remove('hidden');
+                logoutBtn.classList.add('hidden');
+                
+                renderParticipants();
+                updateStats();
+                
+                showToast('Logged out successfully!', 'box-arrow-right', 'blue');
+            }
+            
+            // Event Listeners
+            tryLuckBtn.addEventListener('click', showLoadingAndThenDetail);
+            submitNameBtn.addEventListener('click', addParticipantFromInput);
+            
+            nameInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (nameInput.value.trim() !== '') {
+                        addParticipantFromInput();
+                    }
+                }
+            });
+            
+            nameInput.addEventListener('input', toggleSubmitButton);
+            drawWinnerBtn.addEventListener('click', performDrawWithDelay);
+            resetRaffleBtn.addEventListener('click', resetRaffle);
+            logoutBtn.addEventListener('click', logout);
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !drawEl.classList.contains('hidden')) {
+                    logout();
+                }
+                if (e.key === ' ' && !drawEl.classList.contains('hidden') && e.target.tagName !== 'INPUT') {
+                    e.preventDefault();
+                    performDrawWithDelay();
+                }
+            });
+            
+            // Initialize
+            createParticles();
+            renderParticipants();
+            updateStats();
+            toggleSubmitButton();
+        })();
+    </script>
+</body>
+</html>
